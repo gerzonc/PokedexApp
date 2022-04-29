@@ -1,10 +1,12 @@
-import { ImageBackground, Text, View } from 'react-native';
+import { ImageBackground, View } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import React from 'react';
 
 import images from '../../assets/images';
 import styles from './styles';
-import LinearGradient from 'react-native-linear-gradient';
 import colors from '../../assets/colors';
+import { PokeButton, PokeText } from '../../components';
+import FastImage from 'react-native-fast-image';
 
 const SignIn = () => {
   return (
@@ -21,7 +23,12 @@ const SignIn = () => {
           ]}
           style={styles.linearGradient}
         />
-        <Text>SignIn</Text>
+        <FastImage source={images.appLogo} />
+        <View style={styles.body}>
+          <PokeText text="Iniciar sesión con" type="heading" />
+          <PokeButton text="Iniciar sesión con Google" />
+          <PokeButton text="Iniciar sesión con Facebook" />
+        </View>
       </ImageBackground>
     </View>
   );

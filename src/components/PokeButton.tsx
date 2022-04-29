@@ -1,14 +1,15 @@
-import { Text, Pressable, StyleSheet, PressableProps } from 'react-native';
+import { Pressable, StyleSheet, PressableProps } from 'react-native';
 import React from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import colors from '../assets/colors';
+import PokeText from './PokeText';
 
-interface IButtonProps extends PressableProps {
+interface IPokeButtonProps extends PressableProps {
   text?: string;
   leftIcon?: () => React.ReactElement;
 }
 
-const Button = ({ text, leftIcon, onPress }: IButtonProps) => {
+const PokeButton = ({ text, leftIcon, onPress }: IPokeButtonProps) => {
   return (
     <Pressable style={styles.buttonContainer} onPress={onPress}>
       <LinearGradient
@@ -20,16 +21,17 @@ const Button = ({ text, leftIcon, onPress }: IButtonProps) => {
         ]}
         style={styles.buttonContainer}>
         {leftIcon ? leftIcon() : null}
-        <Text style={styles.buttonText}>{text || 'Placeholder'}</Text>
+        <PokeText type="button" text={text} />
       </LinearGradient>
     </Pressable>
   );
 };
 
-export default Button;
+export default PokeButton;
 
 const styles = StyleSheet.create({
   buttonContainer: {
+    marginTop: 12,
     borderRadius: 15,
     height: 50,
     width: '100%',

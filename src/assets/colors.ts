@@ -1,6 +1,7 @@
 export default {
   leftBackgroundContainer: '#A2D995',
   rightBackgroundContainer: '#24CCA9',
+  normalText: '#49696D',
   buttonText: '#FEFFFA',
   backgroundColor: '#FFFFFF',
   searchBackgroundColor: '#E7F3DF',

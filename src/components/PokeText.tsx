@@ -1,12 +1,34 @@
-import { Text, TextProps } from 'react-native';
+import { StyleSheet, Text, TextProps } from 'react-native';
 import React from 'react';
+import colors from '../assets/colors';
 
 interface IPokeText extends TextProps {
   text?: string;
+  type?: 'heading' | 'button';
 }
 
-const PokeText = ({ text }: IPokeText) => {
-  return <Text>{text || 'Placeholder'}</Text>;
+const PokeText = ({ text, type }: IPokeText) => {
+  return (
+    <Text style={type ? styles[type] : styles.default}>
+      {text || 'Placeholder'}
+    </Text>
+  );
 };
 
 export default PokeText;
+
+const styles = StyleSheet.create({
+  default: {
+    color: colors.normalText,
+  },
+  button: {
+    color: colors.buttonText,
+    textTransform: 'uppercase',
+    fontWeight: 'bold',
+  },
+  heading: {
+    color: colors.normalText,
+    fontSize: 25,
+    fontWeight: 'bold',
+  },
+});

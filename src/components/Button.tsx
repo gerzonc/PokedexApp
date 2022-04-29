@@ -5,16 +5,21 @@ import colors from '../assets/colors';
 
 interface IButtonProps extends PressableProps {
   text?: string;
+  leftIcon?: () => React.ReactElement;
 }
 
-const Button = ({ text }: IButtonProps) => {
+const Button = ({ text, leftIcon, onPress }: IButtonProps) => {
   return (
-    <Pressable style={styles.buttonContainer}>
+    <Pressable style={styles.buttonContainer} onPress={onPress}>
       <LinearGradient
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 0 }}
-        colors={[colors.leftButtonContainer, colors.rightButtonContainer]}
+        colors={[
+          colors.leftBackgroundContainer,
+          colors.rightBackgroundContainer,
+        ]}
         style={styles.buttonContainer}>
+        {leftIcon ? leftIcon() : null}
         <Text style={styles.buttonText}>{text || 'Placeholder'}</Text>
       </LinearGradient>
     </Pressable>

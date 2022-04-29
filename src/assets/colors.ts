@@ -1,5 +1,6 @@
 export default {
   leftBackgroundContainer: '#A2D995',
+  centerBackgroundContainer: '#61D29F',
   rightBackgroundContainer: '#24CCA9',
   normalText: '#49696D',
   buttonText: '#FEFFFA',

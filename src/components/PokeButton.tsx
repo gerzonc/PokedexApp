@@ -31,7 +31,7 @@ export default PokeButton;
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    marginTop: 12,
+    marginTop: 16,
     borderRadius: 15,
     height: 50,
     width: '100%',

@@ -16,10 +16,16 @@ export default StyleSheet.create({
     height: '100%',
     opacity: 0.7,
   },
+  appLogo: {
+    width: 328,
+    height: 121,
+    marginBottom: 100,
+  },
   body: {
+    marginBottom: 55,
     borderRadius: 25,
     paddingHorizontal: 16,
-    height: '22%',
+    height: 213,
     width: '90%',
     justifyContent: 'center',
     alignItems: 'center',

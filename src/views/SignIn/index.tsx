@@ -2,13 +2,13 @@ import { ImageBackground, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import React from 'react';
 
-import images from '../../assets/images';
+import { images, colors } from '../../assets';
 import styles from './styles';
-import colors from '../../assets/colors';
 import { PokeButton, PokeText } from '../../components';
 import FastImage from 'react-native-fast-image';
+import { IBaseScreen } from '../../definitions/screens';
 
-const SignIn = () => {
+const SignIn = ({ navigation }: IBaseScreen<any, any>) => {
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -23,10 +23,13 @@ const SignIn = () => {
           ]}
           style={styles.linearGradient}
         />
-        <FastImage source={images.appLogo} />
+        <FastImage source={images.appLogo} style={styles.appLogo} />
         <View style={styles.body}>
           <PokeText text="Iniciar sesión con" type="heading" />
-          <PokeButton text="Iniciar sesión con Google" />
+          <PokeButton
+            text="Iniciar sesión con Google"
+            onPress={() => navigation.navigate('Home')}
+          />
           <PokeButton text="Iniciar sesión con Facebook" />
         </View>
       </ImageBackground>

@@ -30,7 +30,10 @@ const SignIn = ({ navigation }: IBaseScreen<any, any>) => {
             text="Iniciar sesión con Google"
             onPress={() => navigation.navigate('Home')}
           />
-          <PokeButton text="Iniciar sesión con Facebook" />
+          <PokeButton
+            text="Iniciar sesión con Facebook"
+            onPress={() => navigation.navigate('CreateTeam')}
+          />
         </View>
       </ImageBackground>
     </View>

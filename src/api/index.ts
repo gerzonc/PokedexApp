@@ -1,11 +1,11 @@
 import API from './constants';
 
-interface IGetPokemonNamesData {
+interface IGetPokemonData {
   name: string;
   url: string;
 }
 
-const { BASE_ENDPOINT, POKEMON_DETAILS_ENDPOINT, LIMIT } = API;
+const { BASE_ENDPOINT, POKEMON_DETAILS_ENDPOINT, POKEMON_REGIONS, LIMIT } = API;
 
 export const fetcher = (url: RequestInfo) =>
   fetch(url)
@@ -20,19 +20,37 @@ export const getPokemonNames = () =>
 export const getPokemonDetails = (name: string) =>
   fetcher(`${BASE_ENDPOINT}${POKEMON_DETAILS_ENDPOINT}/${name}`);
 
-export const getPokemonRegion = async () => {
-  const 
-}
+export const getPokemonRegions = async () =>
+  fetcher(`${BASE_ENDPOINT}${POKEMON_REGIONS}`);
 
-export const getPokemonList = async () => {
-  const { results } = await getPokemonNames();
+export const getPokemonByRegion = async () => {
+  const { results } = await getPokemonRegions();
 
   if (!results) {
-    return null;
+    return;
   }
 
   return Promise.all(
-    results.map(async ({ name, url }: IGetPokemonNamesData) => {
+    results.map(async ({ name, url }: IGetPokemonData) => {
+      const { main_generation } = await fetcher(url);
+      const { pokemon_species } = await fetcher(main_generation.url);
+      return {
+        regionName: name,
+        pokemonList: pokemon_species,
+      };
+    }),
+  );
+};
+
+export const getPokemonList = async () => {
+  const { regionName, pokemonList } = await getPokemonByRegion();
+
+  if (!pokemonList) {
+    return;
+  }
+
+  return Promise.all(
+    pokemonList.map(async ({ name, url }: IGetPokemonData) => {
       const {
         sprites: {
           other: { home },
@@ -40,13 +58,13 @@ export const getPokemonList = async () => {
         types,
         height,
       } = await fetcher(url);
-      console.log({
-        pokemonDetails: { image: home.front_default, types, height },
-      });
+
       return {
+        regionName,
         name,
         pokeImage: home.front_default,
         types,
+        height,
       };
     }),
   );

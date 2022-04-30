@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">PokedexApp</string>
+    <string name="facebook_app_id">665696291439550</string>
+    <string name="fb_login_protocol_scheme">fb665696291439550</string>
+    <string name="facebook_client_token">f2f4d23cc2dec813ae88261d61379e13</string>
+
+
 </resources>

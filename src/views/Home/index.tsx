@@ -6,19 +6,19 @@ import styles from './styles';
 
 import { colors } from '../../assets';
 import { PokeSearch } from '../../components';
-import { getPokemonList } from '../../api';
+import { getPokemonByRegion, getPokemonList } from '../../api';
 
-const Home = () => {
+const Home = (): React.ReactElement => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState([]);
 
   useEffect(() => {
-    getPokemonList();
+    getPokemonByRegion();
     // console.log({  });
   }, []);
 
   if (!data) {
-    return;
+    return <></>;
   }
 
   return (

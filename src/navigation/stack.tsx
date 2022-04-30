@@ -1,6 +1,6 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Home, SignIn } from '../views';
+import { CreateTeam, Home, SignIn } from '../views';
 
 const Stack = createNativeStackNavigator();
 
@@ -17,6 +17,9 @@ const RootStack = () => (
     </Stack.Group>
     <Stack.Group>
       <Stack.Screen name="Home" component={Home} />
+    </Stack.Group>
+    <Stack.Group screenOptions={{ presentation: 'modal' }}>
+      <Stack.Screen name="CreateTeam" component={CreateTeam} />
     </Stack.Group>
   </Stack.Navigator>
 );

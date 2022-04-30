@@ -1,6 +1,6 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { CreateTeam, Home, SignIn } from '../views';
+import { CreateTeam, Home, SignIn, Teams } from '../views';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { colors } from '../assets';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -24,7 +24,7 @@ const MainTabs = () => (
     />
     <BottomTabs.Screen
       name="Teams"
-      component={CreateTeam}
+      component={Teams}
       options={{
         tabBarIcon: ({ color }) => (
           <Icon name="group" size={25} color={color} />

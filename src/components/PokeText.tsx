@@ -7,9 +7,9 @@ interface IPokeText extends TextProps {
   type?: 'heading' | 'button';
 }
 
-const PokeText = ({ text, type }: IPokeText) => {
+const PokeText = ({ text, type, style }: IPokeText) => {
   return (
-    <Text style={type ? styles[type] : styles.default}>
+    <Text style={[type ? styles[type] : styles.default, style]}>
       {text || 'Placeholder'}
     </Text>
   );

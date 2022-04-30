@@ -1,19 +1,30 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import React from 'react';
-import { POKEMON_TYPES_COLORS } from '../assets/colors';
+import colors from '../assets/colors';
+import PokeText from './PokeText';
 
 interface IChip {
-  type: keyof typeof POKEMON_TYPES_COLORS;
+  text?: keyof typeof colors;
+  locations?: number;
 }
 
-const Chip = ({ type }: IChip) => {
+const Chip = ({ text, locations }: IChip) => {
+  if (!locations || !text) {
+    return null;
+  }
+
   return (
     <View
       style={[
         styles.container,
-        { backgroundColor: POKEMON_TYPES_COLORS[type] },
+        {
+          backgroundColor: text ? colors[text] : colors.fallback,
+        },
       ]}>
-      <Text>Chip</Text>
+      <PokeText
+        style={styles.text}
+        text={locations ? `Locations: ${locations}` : text}
+      />
     </View>
   );
 };
@@ -22,7 +33,14 @@ export default Chip;
 
 const styles = StyleSheet.create({
   container: {
-    width: 54,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '35%',
     height: 25,
+    borderRadius: 25,
+    margin: 8,
+  },
+  text: {
+    color: colors.rightBackgroundContainer,
   },
 });

@@ -1,13 +1,3 @@
-export default {
-  leftBackgroundContainer: '#A2D995',
-  centerBackgroundContainer: '#61D29F',
-  rightBackgroundContainer: '#24CCA9',
-  normalText: '#49696D',
-  buttonText: '#FEFFFA',
-  backgroundColor: '#FFFFFF',
-  searchBackgroundColor: '#E7F3DF',
-};
-
 export const POKEMON_TYPES_COLORS = {
   normal: '#B5B5A9',
   grass: '#8BD44F',
@@ -38,4 +28,17 @@ export const POKEMON_REGION_COLORS = {
   kalos: '#7500CA',
   alola: '#E07000',
   galar: '#006C06',
+};
+
+export default {
+  leftBackgroundContainer: '#A2D995',
+  centerBackgroundContainer: '#61D29F',
+  rightBackgroundContainer: '#24CCA9',
+  normalText: '#49696D',
+  buttonText: '#FEFFFA',
+  backgroundColor: '#FFFFFF',
+  searchBackgroundColor: '#E7F3DF',
+  fallback: '#000000',
+  ...POKEMON_REGION_COLORS,
+  ...POKEMON_TYPES_COLORS,
 };

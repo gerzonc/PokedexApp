@@ -17,7 +17,7 @@ const PokeCard = ({ pokeName, pokeImage, types }: IPokeCard) => {
       <Text style={styles.pokeName}>{pokeName || 'Placeholder'}</Text>
       <View style={styles.cardInfo}>
         {types && types.length > 0
-          ? types.map(type => <Chip type={type} />)
+          ? types.map(type => <Chip text={type} />)
           : null}
         <FastImage source={pokeImage} />
       </View>

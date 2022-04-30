@@ -1,43 +1,45 @@
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+  TouchableOpacityProps,
+} from 'react-native';
 import React from 'react';
 import { colors, images } from '../assets';
 import FastImage, { Source } from 'react-native-fast-image';
+import PokeText from './PokeText';
+import Chip from './Chip';
 
 const { width } = Dimensions.get('screen');
 
-const ITEM_WIDTH = width * 0.76;
-const ITEM_HEIGHT = ITEM_WIDTH * 1.86;
+export const ITEM_WIDTH = width * 0.76;
+export const ITEM_HEIGHT = ITEM_WIDTH * 1.86;
+export const SPACING = 12;
+export const FULL_SIZE = ITEM_WIDTH + SPACING * 2;
+export const RADIUS = 25;
 
-interface IPokeRegion {
+interface IPokeRegion extends TouchableOpacityProps {
   name: string;
   locations: [];
 }
 
-const PokeRegion = ({ name, locations }: IPokeRegion) => {
+const PokeRegion = ({ name, locations, onPress }: IPokeRegion) => {
   return (
     <View style={styles.container}>
-      <FastImage
-        source={images[name] as Source}
-        style={[StyleSheet.absoluteFillObject, styles.body]}
-        resizeMode="cover"
-      />
+      <TouchableOpacity onPress={onPress}>
+        <FastImage
+          source={images[name] as Source}
+          style={[styles.body]}
+          resizeMode="cover"
+        />
+      </TouchableOpacity>
       <View style={styles.cardInfo}>
-        <Text style={styles.pokeName}>{name || 'Placeholder'}</Text>
+        <PokeText style={styles.regionName} text={name} type="heading" />
+        <Chip text={name as keyof typeof colors} locations={locations.length} />
       </View>
     </View>
   );
-};
-
-const SPACING = 12;
-
-const s = width * 0.68;
-
-const spec = {
-  ITEM_WIDTH: s,
-  ITEM_HEIGHT: s * 1.5,
-  RADIUS: 18,
-  SPACING,
-  FULL_SIZE: s + SPACING * 2,
 };
 
 export default PokeRegion;
@@ -51,15 +53,16 @@ const styles = StyleSheet.create({
   body: {
     height: ITEM_HEIGHT,
     width: ITEM_WIDTH,
-    borderRadius: 25,
-  },
-  pokeName: {
-    fontSize: 20,
-    alignSelf: 'flex-start',
-    fontWeight: 'bold',
-    textTransform: 'uppercase',
+    borderRadius: RADIUS,
   },
   cardInfo: {
-    flexDirection: 'row',
+    marginTop: 4,
+    alignItems: 'center',
+  },
+  regionName: {
+    color: '#000',
+    fontSize: 20,
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
   },
 });

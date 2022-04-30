@@ -37,6 +37,13 @@
             {
               "client_id": "272365971408-u5lgtvhkm6502gpk9ldu0v7cfrajd62i.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "272365971408-3ci580ui67i2lqu601p062atkb0jm556.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.PokedexApp"
+              }
             }
           ]
         }

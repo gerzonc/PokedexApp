@@ -1,14 +1,56 @@
 import { ImageBackground, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import React from 'react';
+import FastImage from 'react-native-fast-image';
+import React, { useEffect } from 'react';
 
 import { images, colors } from '../../assets';
 import styles from './styles';
 import { PokeButton, PokeText } from '../../components';
-import FastImage from 'react-native-fast-image';
 import { IBaseScreen } from '../../definitions/screens';
+import auth from '@react-native-firebase/auth';
+import { LoginManager, AccessToken } from 'react-native-fbsdk-next';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 const SignIn = ({ navigation }: IBaseScreen<any, any>) => {
+  const onGoogleButtonPress = async () => {
+    try {
+      const { idToken } = await GoogleSignin.signIn();
+      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+
+      return auth().signInWithCredential(googleCredential);
+    } catch (e) {
+      // Do nothing
+    }
+  };
+  const onFacebookButtonPress = async () => {
+    try {
+      const result = await LoginManager.logInWithPermissions([
+        'public_profile',
+        'email',
+      ]);
+
+      if (result.isCancelled) {
+        return;
+      }
+
+      const data = await AccessToken.getCurrentAccessToken();
+
+      if (!data) {
+        return;
+      }
+
+      const facebookCredential = auth.FacebookAuthProvider.credential(
+        data.accessToken,
+      );
+
+      return auth().signInWithCredential(facebookCredential);
+    } catch (e) {
+      // TODO: Crashlytics
+    }
+  };
+
+  useEffect(() => {}, []);
+
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -28,11 +70,11 @@ const SignIn = ({ navigation }: IBaseScreen<any, any>) => {
           <PokeText text="Iniciar sesión con" type="heading" />
           <PokeButton
             text="Iniciar sesión con Google"
-            onPress={() => navigation.navigate('Home')}
+            onPress={() => onGoogleButtonPress()}
           />
           <PokeButton
             text="Iniciar sesión con Facebook"
-            onPress={() => navigation.navigate('CreateTeam')}
+            onPress={() => onFacebookButtonPress()}
           />
         </View>
       </ImageBackground>

@@ -1,20 +1,14 @@
-import { View } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
 import React, { useEffect, useState } from 'react';
 
-import styles from './styles';
-
-import { colors } from '../../assets';
 import { PokeSearch } from '../../components';
-import { getPokemonByRegion, getPokemonList } from '../../api';
+import { getPokemonByRegion } from '../../api';
+import PokeView from '../../components/PokeView';
 
 const Home = (): React.ReactElement => {
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState([]);
 
   useEffect(() => {
     getPokemonByRegion();
-    // console.log({  });
   }, []);
 
   if (!data) {
@@ -22,23 +16,9 @@ const Home = (): React.ReactElement => {
   }
 
   return (
-    <View style={styles.container}>
-      <LinearGradient
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 0 }}
-        colors={[
-          colors.leftBackgroundContainer,
-          colors.centerBackgroundContainer,
-          colors.rightBackgroundContainer,
-        ]}
-        locations={[0, 0.5, 1]}
-        useAngle={true}
-        angle={110}
-        angleCenter={{ x: 0.4, y: 0.5 }}
-        style={styles.linearGradient}>
-        <PokeSearch />
-      </LinearGradient>
-    </View>
+    <PokeView>
+      <PokeSearch />
+    </PokeView>
   );
 };
 

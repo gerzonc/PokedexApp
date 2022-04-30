@@ -28,3 +28,14 @@ export const POKEMON_TYPES_COLORS = {
   steel: '#C3C1D7',
   fairy: '#FAADFF',
 };
+
+export const POKEMON_REGION_COLORS = {
+  kanto: '#0022FF',
+  johto: '#E5D914',
+  hoenn: '#FE002A',
+  sinnoh: '#4E4E4E',
+  unova: '#FFFFFF',
+  kalos: '#7500CA',
+  alola: '#E07000',
+  galar: '#006C06',
+};

@@ -1,12 +1,26 @@
-import { Text, View } from 'react-native';
-import React from 'react';
+import { View } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
+import React, { useEffect, useState } from 'react';
 
 import styles from './styles';
-import Button from '../../components/PokeButton';
-import LinearGradient from 'react-native-linear-gradient';
+
 import { colors } from '../../assets';
+import { PokeSearch } from '../../components';
+import { getPokemonList } from '../../api';
 
 const Home = () => {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState([]);
+
+  useEffect(() => {
+    getPokemonList();
+    // console.log({  });
+  }, []);
+
+  if (!data) {
+    return;
+  }
+
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -21,10 +35,9 @@ const Home = () => {
         useAngle={true}
         angle={110}
         angleCenter={{ x: 0.4, y: 0.5 }}
-        style={styles.linearGradient}
-      />
-      <Text>Hello World!</Text>
-      <Button text="Iniciar sesión" />
+        style={styles.linearGradient}>
+        <PokeSearch />
+      </LinearGradient>
     </View>
   );
 };

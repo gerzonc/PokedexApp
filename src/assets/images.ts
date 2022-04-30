@@ -4,6 +4,7 @@ interface IImages {
 
 const images: IImages = {
   signinBackground: require('./images/signin_background.jpeg'),
+  pokeball: require('./images/pokeball.png'),
   appLogo: require('./images/app_logo.png'),
   kanto: require('./images/kanto_map.webp'),
   alola: require('./images/alola_map.png'),

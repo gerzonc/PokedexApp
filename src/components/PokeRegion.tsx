@@ -2,8 +2,8 @@ import {
   View,
   StyleSheet,
   Dimensions,
-  TouchableOpacity,
-  TouchableOpacityProps,
+  Pressable,
+  PressableProps,
 } from 'react-native';
 import React from 'react';
 import { colors, images } from '../assets';
@@ -19,7 +19,7 @@ export const SPACING = 12;
 export const FULL_SIZE = ITEM_WIDTH + SPACING * 2;
 export const RADIUS = 25;
 
-interface IPokeRegion extends TouchableOpacityProps {
+interface IPokeRegion extends PressableProps {
   name: string;
   locations: [];
 }
@@ -27,15 +27,16 @@ interface IPokeRegion extends TouchableOpacityProps {
 const PokeRegion = ({ name, locations, onPress }: IPokeRegion) => {
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={onPress}>
+      <Pressable onPress={onPress}>
         <FastImage
           source={images[name] as Source}
           style={[styles.body]}
           resizeMode="cover"
         />
-      </TouchableOpacity>
-      <View style={styles.cardInfo}>
+        <View style={[styles.body, styles.imageCover]} />
         <PokeText style={styles.regionName} text={name} type="heading" />
+      </Pressable>
+      <View style={styles.cardInfo}>
         <Chip text={name as keyof typeof colors} locations={locations.length} />
       </View>
     </View>
@@ -55,13 +56,21 @@ const styles = StyleSheet.create({
     width: ITEM_WIDTH,
     borderRadius: RADIUS,
   },
+  imageCover: {
+    position: 'absolute',
+    backgroundColor: '#000',
+    opacity: 0.55,
+  },
   cardInfo: {
     marginTop: 4,
     alignItems: 'center',
   },
   regionName: {
-    color: '#000',
-    fontSize: 20,
+    color: '#FFF',
+    fontSize: 48,
+    marginLeft: 16,
+    bottom: 12,
+    position: 'absolute',
     fontWeight: 'bold',
     textTransform: 'uppercase',
   },

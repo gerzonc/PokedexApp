@@ -5,9 +5,12 @@ import PokeView from '../../components/PokeView';
 import PokeRegion, { FULL_SIZE } from '../../components/PokeRegion';
 import { FlatList, StatusBar } from 'react-native';
 import ActivityIndicator from '../../components/ActivityIndicator';
+import { PokeSearch } from '../../components';
 
 const Home = (): React.ReactElement => {
   const [data, setData] = useState([]);
+  const [search, setSearch] = useState([]);
+  const [searching, setSearching] = useState(false);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -21,6 +24,17 @@ const Home = (): React.ReactElement => {
       // Do nothing
     }
   }, []);
+
+  const onSearchText = async (text: string) => {
+    if (!text) {
+      setSearching(false);
+    }
+    setSearching(true);
+    const result = data.filter((value: any) =>
+      value.name.includes(text.toLowerCase()),
+    );
+    setSearch(result);
+  };
 
   const renderItem = ({ item }) => (
     <PokeRegion name={item.name} locations={item.locations} />
@@ -41,8 +55,12 @@ const Home = (): React.ReactElement => {
   return (
     <PokeView>
       <StatusBar hidden />
+      <PokeSearch
+        placeholder="Search for a region"
+        onChangeText={onSearchText}
+      />
       <FlatList
-        data={data}
+        data={search ? search : data}
         horizontal
         showsHorizontalScrollIndicator={false}
         snapToInterval={FULL_SIZE}

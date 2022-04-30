@@ -1,7 +1,8 @@
 import { StyleSheet, View } from 'react-native';
 import React from 'react';
 import LinearGradient from 'react-native-linear-gradient';
-import { colors } from '../assets';
+import { colors, images } from '../assets';
+import FastImage from 'react-native-fast-image';
 
 const PokeView: React.FC = ({ children }): React.ReactElement => {
   return (
@@ -19,6 +20,7 @@ const PokeView: React.FC = ({ children }): React.ReactElement => {
         angle={110}
         angleCenter={{ x: 0.4, y: 0.5 }}
         style={styles.linearGradient}>
+        <FastImage source={images.pokeball} style={styles.pokeball} />
         {children}
       </LinearGradient>
     </View>
@@ -39,5 +41,20 @@ const styles = StyleSheet.create({
     height: '100%',
     opacity: 0.7,
     paddingTop: 65,
+  },
+  pokeball: {
+    position: 'absolute',
+    alignSelf: 'flex-end',
+    top: -25,
+    right: -25,
+    opacity: 0.45,
+
+    width: 260,
+    height: 260,
+    transform: [
+      {
+        rotate: '20deg',
+      },
+    ],
   },
 });

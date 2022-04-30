@@ -14,7 +14,7 @@ const PokeSearch = (props: IPokeSearch) => {
       <Icon name="search" size={25} color={colors.normalText} />
       <TextInput
         style={styles.input}
-        placeholder="Search for a Pokémon"
+        placeholder={props.placeholder || 'Search for a Pokémon'}
         placeholderTextColor={colors.normalText}
         {...props}
       />
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 34,
     borderRadius: 15,
-    marginVertical: 16,
+    margin: 16,
   },
   input: {
     height: 55,

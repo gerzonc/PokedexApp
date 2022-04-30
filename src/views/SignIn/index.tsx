@@ -22,14 +22,10 @@ const SignIn = ({ navigation }: IBaseScreen<any, any>) => {
   });
 
   const onGoogleButtonPress = async () => {
-    try {
-      const { idToken } = await GoogleSignin.signIn();
-      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+    const { idToken } = await GoogleSignin.signIn();
+    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
 
-      return auth().signInWithCredential(googleCredential);
-    } catch (e) {
-      // Do nothing
-    }
+    return auth().signInWithCredential(googleCredential);
   };
   const onFacebookButtonPress = async () => {
     try {

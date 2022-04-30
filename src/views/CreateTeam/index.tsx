@@ -1,11 +1,12 @@
-import { View, Text } from 'react-native';
+import { Text } from 'react-native';
 import React from 'react';
+import PokeView from '../../components/PokeView';
 
 const CreateTeam = () => {
   return (
-    <View>
+    <PokeView>
       <Text>Hello World!</Text>
-    </View>
+    </PokeView>
   );
 };
 

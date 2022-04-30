@@ -35,10 +35,6 @@ const styles = StyleSheet.create({
     marginVertical: 16,
   },
   input: {
-    // borderRadius: 15,
-    // height: 50,
-    // width: '100%',
-    // backgroundColor: colors.searchBackgroundColor,
     height: 55,
     width: '100%',
     fontSize: 17,

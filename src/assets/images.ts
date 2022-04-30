@@ -1,4 +1,8 @@
-export default {
+interface IImages {
+  [index: string]: any;
+}
+
+const images: IImages = {
   signinBackground: require('./images/signin_background.jpeg'),
   appLogo: require('./images/app_logo.png'),
   kanto: require('./images/kanto_map.webp'),
@@ -10,3 +14,5 @@ export default {
   sinnoh: require('./images/sinnoh_map.png'),
   unova: require('./images/unova_map.png'),
 };
+
+export default images;

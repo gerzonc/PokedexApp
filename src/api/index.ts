@@ -23,6 +23,26 @@ export const getPokemonDetails = (name: string) =>
 export const getPokemonRegions = async () =>
   fetcher(`${BASE_ENDPOINT}${POKEMON_REGIONS}`);
 
+export const getPokemonRegionDetails = async () => {
+  const { results } = await getPokemonRegions();
+
+  if (!results) {
+    return;
+  }
+
+  return Promise.all(
+    results.map(async ({ name, url }: IGetPokemonData) => {
+      const { locations, main_generation } = await fetcher(url);
+
+      return {
+        name,
+        locations,
+        regionPokemon: main_generation.url,
+      };
+    }),
+  );
+};
+
 export const getPokemonByRegion = async () => {
   const { results } = await getPokemonRegions();
 
@@ -42,30 +62,30 @@ export const getPokemonByRegion = async () => {
   );
 };
 
-export const getPokemonList = async () => {
-  const { regionName, pokemonList } = await getPokemonByRegion();
+// export const getPokemonList = async () => {
+//   const { regionName, pokemonList }: any = await getPokemonByRegion();
 
-  if (!pokemonList) {
-    return;
-  }
+//   if (!pokemonList) {
+//     return;
+//   }
 
-  return Promise.all(
-    pokemonList.map(async ({ name, url }: IGetPokemonData) => {
-      const {
-        sprites: {
-          other: { home },
-        },
-        types,
-        height,
-      } = await fetcher(url);
+//   return Promise.all(
+//     pokemonList.map(async ({ name, url }: IGetPokemonData) => {
+//       const {
+//         sprites: {
+//           other: { home },
+//         },
+//         types,
+//         height,
+//       } = await fetcher(url);
 
-      return {
-        regionName,
-        name,
-        pokeImage: home.front_default,
-        types,
-        height,
-      };
-    }),
-  );
-};
+//       return {
+//         regionName,
+//         name,
+//         pokeImage: home.front_default,
+//         types,
+//         height,
+//       };
+//     }),
+//   );
+// };

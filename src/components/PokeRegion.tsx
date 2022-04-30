@@ -17,7 +17,7 @@ export const ITEM_WIDTH = width * 0.76;
 export const ITEM_HEIGHT = ITEM_WIDTH * 1.86;
 export const SPACING = 12;
 export const FULL_SIZE = ITEM_WIDTH + SPACING * 2;
-export const RADIUS = 25;
+export const RADIUS = 22;
 
 interface IPokeRegion extends PressableProps {
   name: string;

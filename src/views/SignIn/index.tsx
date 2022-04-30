@@ -22,10 +22,14 @@ const SignIn = ({ navigation }: IBaseScreen<any, any>) => {
   });
 
   const onGoogleButtonPress = async () => {
-    const { idToken } = await GoogleSignin.signIn();
-    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+    try {
+      const { idToken } = await GoogleSignin.signIn();
+      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
 
-    return auth().signInWithCredential(googleCredential);
+      return auth().signInWithCredential(googleCredential);
+    } catch (e) {
+      // TODO: Crashlytics
+    }
   };
   const onFacebookButtonPress = async () => {
     try {
@@ -54,8 +58,6 @@ const SignIn = ({ navigation }: IBaseScreen<any, any>) => {
     }
   };
 
-  useEffect(() => {}, []);
-
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -72,13 +74,13 @@ const SignIn = ({ navigation }: IBaseScreen<any, any>) => {
         />
         <FastImage source={images.appLogo} style={styles.appLogo} />
         <View style={styles.body}>
-          <PokeText text="Iniciar sesión con" type="heading" />
+          <PokeText text="Sign in with" type="heading" />
           <PokeButton
-            text="Iniciar sesión con Google"
+            text="Sign in with Google"
             onPress={() => onGoogleButtonPress()}
           />
           <PokeButton
-            text="Iniciar sesión con Facebook"
+            text="Sign in with Facebook"
             onPress={() => onFacebookButtonPress()}
           />
         </View>

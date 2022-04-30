@@ -1,6 +1,6 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { CreateTeam, Home, SignIn, Teams } from '../views';
+import { CreateTeam, Home, Region, SignIn, Teams } from '../views';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { colors } from '../assets';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -39,6 +39,7 @@ const RootStack = () => {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="SignIn" component={SignIn} />
       <Stack.Screen name="Main" component={MainTabs} />
+      <Stack.Screen name="Region" component={Region} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
         <Stack.Screen name="CreateTeam" component={CreateTeam} />
       </Stack.Group>

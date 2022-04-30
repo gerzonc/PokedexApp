@@ -1,11 +1,11 @@
-import { View, Text } from 'react-native';
 import React from 'react';
+import { PokeSearch, PokeView } from '../../components';
 
 const Teams = () => {
   return (
-    <View>
-      <Text>Teams</Text>
-    </View>
+    <PokeView>
+      <PokeSearch placeholder="Search for a team" />
+    </PokeView>
   );
 };
 

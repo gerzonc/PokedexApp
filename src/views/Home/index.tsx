@@ -6,6 +6,7 @@ import PokeRegion, { FULL_SIZE } from '../../components/PokeRegion';
 import { FlatList, StatusBar } from 'react-native';
 import ActivityIndicator from '../../components/ActivityIndicator';
 import { PokeSearch } from '../../components';
+import NotFound from '../../components/NotFound';
 
 const Home = (): React.ReactElement => {
   const [data, setData] = useState([]);
@@ -36,7 +37,7 @@ const Home = (): React.ReactElement => {
     setSearch(result);
   };
 
-  const renderItem = ({ item }) => (
+  const renderItem = ({ item }: { item: any }) => (
     <PokeRegion name={item.name} locations={item.locations} />
   );
 
@@ -59,16 +60,20 @@ const Home = (): React.ReactElement => {
         placeholder="Search for a region"
         onChangeText={onSearchText}
       />
-      <FlatList
-        data={search ? search : data}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        snapToInterval={FULL_SIZE}
-        decelerationRate="fast"
-        pagingEnabled
-        keyExtractor={(item, index) => (index + item).toString()}
-        renderItem={renderItem}
-      />
+      {searching && !search.length ? (
+        <NotFound />
+      ) : (
+        <FlatList
+          data={searching ? search : data}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          snapToInterval={FULL_SIZE}
+          decelerationRate="fast"
+          pagingEnabled
+          keyExtractor={(item, index) => (index + item).toString()}
+          renderItem={renderItem}
+        />
+      )}
     </PokeView>
   );
 };

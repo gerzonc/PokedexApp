@@ -3,6 +3,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import RootStack from './navigation';
 import { Settings } from 'react-native-fbsdk-next';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { LogBox } from 'react-native';
+
+LogBox.ignoreLogs(['ViewPropTypes will be removed from React Native']);
 
 GoogleSignin.configure({
   webClientId:

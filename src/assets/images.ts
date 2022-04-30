@@ -14,6 +14,8 @@ const images: IImages = {
   kalos: require('./images/kalos_map.png'),
   sinnoh: require('./images/sinnoh_map.png'),
   unova: require('./images/unova_map.png'),
+  diglett: require('./images/animated/diglett.json'),
+  squirtle: require('./images/animated/squirtle.json'),
 };
 
 export default images;

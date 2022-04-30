@@ -1,17 +1,26 @@
 import { ImageBackground, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import FastImage from 'react-native-fast-image';
-import React, { useEffect } from 'react';
-
-import { images, colors } from '../../assets';
-import styles from './styles';
-import { PokeButton, PokeText } from '../../components';
-import { IBaseScreen } from '../../definitions/screens';
 import auth from '@react-native-firebase/auth';
 import { LoginManager, AccessToken } from 'react-native-fbsdk-next';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import React, { useEffect } from 'react';
+
+import { IBaseScreen } from '../../definitions/screens';
+import { PokeButton, PokeText } from '../../components';
+import { images, colors } from '../../assets';
+import styles from './styles';
 
 const SignIn = ({ navigation }: IBaseScreen<any, any>) => {
+  useEffect(() => {
+    const subscription = auth().onAuthStateChanged(user => {
+      if (user) {
+        navigation.replace('Main');
+      }
+    });
+    return subscription;
+  });
+
   const onGoogleButtonPress = async () => {
     try {
       const { idToken } = await GoogleSignin.signIn();

@@ -1,29 +1,30 @@
 import React, { useEffect, useState } from 'react';
+import { FlatList } from 'react-native-gesture-handler';
+import { StatusBar } from 'react-native';
 
 import { getPokemonRegionDetails } from '../../api';
-import PokeView from '../../components/PokeView';
-import PokeRegion, { FULL_SIZE } from '../../components/PokeRegion';
-import { FlatList, StatusBar } from 'react-native';
-import ActivityIndicator from '../../components/ActivityIndicator';
-import { PokeSearch } from '../../components';
-import NotFound from '../../components/NotFound';
+import {
+  ActivityIndicator,
+  NotFound,
+  PokeRegion,
+  PokeSearch,
+  PokeView,
+} from '../../components';
+import { IBaseScreen } from '../../definitions/screens';
+import { FULL_SIZE } from '../../components/PokeRegion';
 
-const Home = (): React.ReactElement => {
+const Home = ({ navigation }: IBaseScreen<any, any>): React.ReactElement => {
   const [data, setData] = useState([]);
   const [search, setSearch] = useState([]);
   const [searching, setSearching] = useState(false);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    try {
-      setLoading(true);
-      getPokemonRegionDetails().then((response: any) => {
-        setData(response);
-        setLoading(false);
-      });
-    } catch (e) {
-      // Do nothing
-    }
+    setLoading(true);
+    getPokemonRegionDetails().then((response: any) => {
+      setData(response);
+      setLoading(false);
+    });
   }, []);
 
   const onSearchText = async (text: string) => {
@@ -37,21 +38,19 @@ const Home = (): React.ReactElement => {
     setSearch(result);
   };
 
+  const onPressItem = (item: any) =>
+    navigation.navigate('Region', {
+      name: item.name,
+      regionPokemon: item.regionPokemon,
+    });
+
   const renderItem = ({ item }: { item: any }) => (
-    <PokeRegion name={item.name} locations={item.locations} />
+    <PokeRegion
+      name={item.name}
+      locations={item.locations}
+      onPress={() => onPressItem(item)}
+    />
   );
-
-  if (loading) {
-    return (
-      <PokeView>
-        <ActivityIndicator />
-      </PokeView>
-    );
-  }
-
-  if (!data) {
-    return <></>;
-  }
 
   return (
     <PokeView>
@@ -60,8 +59,10 @@ const Home = (): React.ReactElement => {
         placeholder="Search for a region"
         onChangeText={onSearchText}
       />
-      {searching && !search.length ? (
-        <NotFound />
+      {(searching && !search.length) || !data ? <NotFound /> : null}
+
+      {loading ? (
+        <ActivityIndicator />
       ) : (
         <FlatList
           data={searching ? search : data}

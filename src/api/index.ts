@@ -43,49 +43,31 @@ export const getPokemonRegionDetails = async () => {
   );
 };
 
-export const getPokemonByRegion = async () => {
-  const { results } = await getPokemonRegions();
+export const getPokemonByRegion = async (regionUrl: string) => {
+  const { pokemon_species } = await fetcher(regionUrl);
 
-  if (!results) {
+  if (!pokemon_species) {
     return;
   }
 
   return Promise.all(
-    results.map(async ({ name, url }: IGetPokemonData) => {
-      const { main_generation } = await fetcher(url);
-      const { pokemon_species } = await fetcher(main_generation.url);
+    pokemon_species.map(async ({ name, url }: IGetPokemonData) => {
+      const {
+        sprites: {
+          other: { home },
+        },
+        types,
+        height,
+      } = await fetcher(url).then(({ varieties }) =>
+        fetcher(varieties[0].pokemon?.url),
+      );
+
       return {
-        regionName: name,
-        pokemonList: pokemon_species,
+        name,
+        pokeImage: home.front_default,
+        types,
+        height,
       };
     }),
   );
 };
-
-// export const getPokemonList = async () => {
-//   const { regionName, pokemonList }: any = await getPokemonByRegion();
-
-//   if (!pokemonList) {
-//     return;
-//   }
-
-//   return Promise.all(
-//     pokemonList.map(async ({ name, url }: IGetPokemonData) => {
-//       const {
-//         sprites: {
-//           other: { home },
-//         },
-//         types,
-//         height,
-//       } = await fetcher(url);
-
-//       return {
-//         regionName,
-//         name,
-//         pokeImage: home.front_default,
-//         types,
-//         height,
-//       };
-//     }),
-//   );
-// };

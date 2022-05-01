@@ -4,4 +4,7 @@ export { default as PokeSearch } from './PokeSearch';
 export { default as PokeCard } from './PokeCard';
 export { default as PokeRegion } from './PokeRegion';
 export { default as PokeView } from './PokeView';
+export { default as PokeHeader } from './PokeHeader';
+export { default as ActivityIndicator } from './ActivityIndicator';
+export { default as NotFound } from './NotFound';
 export { default as Chip } from './Chip';

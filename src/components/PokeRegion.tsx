@@ -2,14 +2,15 @@ import {
   View,
   StyleSheet,
   Dimensions,
-  Pressable,
-  PressableProps,
+  GestureResponderEvent,
 } from 'react-native';
+// import { TouchableHighlight } from 'react-native-gesture-handler';
 import React from 'react';
 import { colors, images } from '../assets';
 import FastImage, { Source } from 'react-native-fast-image';
 import PokeText from './PokeText';
 import Chip from './Chip';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const { width } = Dimensions.get('screen');
 
@@ -19,23 +20,26 @@ export const SPACING = 12;
 export const FULL_SIZE = ITEM_WIDTH + SPACING * 2;
 export const RADIUS = 22;
 
-interface IPokeRegion extends PressableProps {
+interface IPokeRegion {
   name: string;
   locations: [];
+  onPress: Function;
 }
 
 const PokeRegion = ({ name, locations, onPress }: IPokeRegion) => {
   return (
     <View style={styles.container}>
-      <Pressable onPress={onPress}>
-        <FastImage
-          source={images[name] as Source}
-          style={[styles.body]}
-          resizeMode="cover"
-        />
-        <View style={[styles.body, styles.imageCover]} />
-        <PokeText style={styles.regionName} text={name} type="heading" />
-      </Pressable>
+      <TouchableOpacity onPress={() => onPress()}>
+        <>
+          <FastImage
+            source={images[name] as Source}
+            style={[styles.body]}
+            resizeMode="cover"
+          />
+          <View style={[styles.body, styles.imageCover]} />
+          <PokeText style={styles.regionName} text={name} type="heading" />
+        </>
+      </TouchableOpacity>
       <View style={styles.cardInfo}>
         <Chip text={name as keyof typeof colors} locations={locations.length} />
       </View>

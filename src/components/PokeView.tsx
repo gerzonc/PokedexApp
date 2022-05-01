@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
     top: -25,
     right: -25,
-    opacity: 0.45,
+    opacity: 0.15,
     width: 260,
     height: 260,
     transform: [

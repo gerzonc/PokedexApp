@@ -17,6 +17,7 @@ const PokeButton = ({
   onPress,
   plainBackground,
   disabled,
+  style,
 }: IPokeButtonProps) => {
   const isPlainBackground = !plainBackground
     ? [colors.leftBackgroundContainer, colors.rightBackgroundContainer]
@@ -29,7 +30,7 @@ const PokeButton = ({
         colors={
           disabled ? [colors.normalText, colors.normalText] : isPlainBackground
         }
-        style={styles.buttonContainer}>
+        style={[styles.buttonContainer, style]}>
         {leftIcon ? leftIcon() : null}
         <PokeText
           type="button"

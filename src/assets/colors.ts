@@ -34,6 +34,7 @@ export default {
   leftBackgroundContainer: '#A2D995',
   centerBackgroundContainer: '#61D29F',
   rightBackgroundContainer: '#24CCA9',
+  inputText: '#78989F',
   normalText: '#49696D',
   buttonText: '#FEFFFA',
   backgroundColor: '#FFFFFF',

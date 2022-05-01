@@ -16,20 +16,26 @@ const PokeButton = ({
   leftIcon,
   onPress,
   plainBackground,
+  disabled,
 }: IPokeButtonProps) => {
+  const isPlainBackground = !plainBackground
+    ? [colors.leftBackgroundContainer, colors.rightBackgroundContainer]
+    : [colors.normalText, colors.normalText];
   return (
-    <Pressable style={styles.buttonContainer} onPress={onPress}>
+    <Pressable disabled={disabled} onPress={onPress}>
       <LinearGradient
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 0 }}
         colors={
-          !plainBackground
-            ? [colors.leftBackgroundContainer, colors.rightBackgroundContainer]
-            : [colors.leftBackgroundContainer, colors.leftBackgroundContainer]
+          disabled ? [colors.normalText, colors.normalText] : isPlainBackground
         }
         style={styles.buttonContainer}>
         {leftIcon ? leftIcon() : null}
-        <PokeText type="button" text={text} />
+        <PokeText
+          type="button"
+          text={text}
+          style={disabled ? styles.disabled : styles.buttonText}
+        />
       </LinearGradient>
     </Pressable>
   );
@@ -40,15 +46,21 @@ export default PokeButton;
 const styles = StyleSheet.create({
   buttonContainer: {
     marginTop: 16,
+    marginHorizontal: 16,
     borderRadius: 15,
     height: 50,
-    width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  disabledContainer: {
+    backgroundColor: 'red',
   },
   buttonText: {
     color: colors.buttonText,
     textTransform: 'uppercase',
     fontWeight: 'bold',
+  },
+  disabled: {
+    color: colors.inputText,
   },
 });

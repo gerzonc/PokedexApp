@@ -40,9 +40,7 @@ const RootStack = () => {
       <Stack.Screen name="SignIn" component={SignIn} />
       <Stack.Screen name="Main" component={MainTabs} />
       <Stack.Screen name="Region" component={Region} />
-      <Stack.Group screenOptions={{ presentation: 'modal' }}>
-        <Stack.Screen name="CreateTeam" component={CreateTeam} />
-      </Stack.Group>
+      <Stack.Screen name="CreateTeam" component={CreateTeam} />
     </Stack.Navigator>
   );
 };

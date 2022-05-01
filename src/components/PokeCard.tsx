@@ -8,6 +8,7 @@ import FastImage, { Source } from 'react-native-fast-image';
 interface IPokeCard {
   pokeName: string;
   pokeImage: string;
+  selected?: boolean;
   types: {
     type: {
       name: keyof typeof colors;
@@ -32,9 +33,11 @@ const PokeImage = ({ actualSource, placeholder }: IImage) => {
   );
 };
 
-const PokeCard = ({ pokeName, pokeImage, types }: IPokeCard) => {
+const PokeCard = ({ pokeName, pokeImage, types, selected }: IPokeCard) => {
+  const [isSelected] = useState(selected);
   return (
     <View style={styles.container}>
+      {isSelected ? <View style={styles.selected} /> : null}
       <Text style={styles.pokeName}>{pokeName || 'Placeholder'}</Text>
       <View style={styles.cardInfo}>
         <View style={styles.chip}>
@@ -92,6 +95,16 @@ const styles = StyleSheet.create({
       },
     ],
     zIndex: -1,
+  },
+  selected: {
+    position: 'absolute',
+    width: 182,
+    height: 186,
+    backgroundColor: colors.leftBackgroundContainer,
+    opacity: 0.7,
+    borderWidth: 3,
+    borderColor: colors.backgroundColor,
+    borderRadius: 25,
   },
   cardInfo: {
     flexDirection: 'row',

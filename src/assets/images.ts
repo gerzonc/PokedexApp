@@ -16,6 +16,7 @@ const images: IImages = {
   unova: require('./images/unova_map.png'),
   squirtleSilhouette: require('./images/squirtle_silhouette.png'),
   squirtle: require('./images/animated/squirtle.json'),
+  mewtwo: require('./images/mewtwo.png'),
 };
 
 export default images;

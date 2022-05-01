@@ -1,8 +1,9 @@
-import { View, Text, StyleSheet, Image } from 'react-native';
-import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
 
 import { colors, images } from '../assets';
 import Chip from './Chip';
+import FastImage, { Source } from 'react-native-fast-image';
 
 interface IPokeCard {
   pokeName: string;
@@ -10,9 +11,26 @@ interface IPokeCard {
   types: {
     type: {
       name: keyof typeof colors;
+      url: string;
     };
   }[];
 }
+
+interface IImage {
+  actualSource: string;
+  placeholder: Source;
+}
+
+const PokeImage = ({ actualSource, placeholder }: IImage) => {
+  const [source, setSource] = useState(placeholder);
+  return (
+    <FastImage
+      source={source}
+      onLoadEnd={() => setSource({ uri: actualSource })}
+      style={styles.pokeImage}
+    />
+  );
+};
 
 const PokeCard = ({ pokeName, pokeImage, types }: IPokeCard) => {
   return (
@@ -21,13 +39,13 @@ const PokeCard = ({ pokeName, pokeImage, types }: IPokeCard) => {
       <View style={styles.cardInfo}>
         <View style={styles.chip}>
           {types.length > 0
-            ? types.map(({ type: { name } }) => <Chip text={name} />)
+            ? types.map(({ type }) => <Chip key={type.url} text={type.name} />)
             : null}
         </View>
-        <Image
-          defaultSource={images.squirtleSilhouette}
-          source={{ uri: pokeImage }}
-          style={styles.pokeImage}
+        <FastImage source={images.pokeball} style={styles.pokeball} />
+        <PokeImage
+          actualSource={pokeImage}
+          placeholder={images.squirtleSilhouette}
         />
       </View>
     </View>
@@ -39,6 +57,7 @@ export default PokeCard;
 const styles = StyleSheet.create({
   container: {
     borderRadius: 25,
+    overflow: 'hidden',
     width: 182,
     height: 186,
     padding: 16,
@@ -58,6 +77,21 @@ const styles = StyleSheet.create({
     bottom: -15,
     width: 125,
     height: 125,
+  },
+  pokeball: {
+    position: 'absolute',
+    alignSelf: 'flex-end',
+    bottom: -35,
+    right: -35,
+    opacity: 0.25,
+    width: 150,
+    height: 150,
+    transform: [
+      {
+        rotate: '20deg',
+      },
+    ],
+    zIndex: -1,
   },
   cardInfo: {
     flexDirection: 'row',

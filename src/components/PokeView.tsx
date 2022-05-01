@@ -48,7 +48,6 @@ const styles = StyleSheet.create({
     top: -25,
     right: -25,
     opacity: 0.45,
-
     width: 260,
     height: 260,
     transform: [

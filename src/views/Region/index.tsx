@@ -9,7 +9,7 @@ import { IBaseScreen } from '../../definitions/screens';
 import styles from './styles';
 
 const Region = ({ navigation, route }: IBaseScreen<any, any>) => {
-  const { name, regionPokemon } = route.params;
+  const { regionPokemon }: any = route.params;
   const [data, setData] = useState([]);
   const [search, setSearch] = useState([]);
   const [searching, setSearching] = useState(false);
@@ -34,12 +34,6 @@ const Region = ({ navigation, route }: IBaseScreen<any, any>) => {
     setSearch(result);
   };
 
-  //   const onPressItem = (item: any) =>
-  //     navigation.navigate('Region', {
-  //       name: item.name,
-  //       regionPokemon: item.regionPokemon,
-  //     });
-
   const renderItem = ({ item }: { item: any }) => (
     <PokeCard
       pokeName={item.name}
@@ -63,7 +57,7 @@ const Region = ({ navigation, route }: IBaseScreen<any, any>) => {
         showsVerticalScrollIndicator={false}
         numColumns={2}
         contentContainerStyle={styles.container}
-        keyExtractor={(item, index) => item.pokeImage + index * 100}
+        keyExtractor={item => item.pokeImage}
         renderItem={renderItem}
       />
     );

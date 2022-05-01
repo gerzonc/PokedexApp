@@ -1,10 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { PokeButton, PokeSearch, PokeText, PokeView } from '../../components';
 import { images } from '../../assets';
+import database from '@react-native-firebase/database';
 
 const NoTeams = () => {
   const navigation = useNavigation();
@@ -27,7 +28,13 @@ const NoTeams = () => {
 };
 
 const Teams = () => {
-  const [teams, setTeams] = useState([]);
+  const [teams, setTeams] = useState<any>([]);
+
+  useEffect(() => {
+    database()
+      .ref('/teams')
+      .on('value', snapshot => setTeams([snapshot.val()]));
+  });
 
   if (!teams.length) {
     return (

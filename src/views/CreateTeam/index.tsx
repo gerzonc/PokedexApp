@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
-import { Pressable, StyleSheet, View } from 'react-native';
-import { FlatList, TouchableOpacity } from 'react-native-gesture-handler';
+import { Alert, Pressable, StyleSheet, View } from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
 import database from '@react-native-firebase/database';
 import { Picker } from '@react-native-picker/picker';
 
@@ -20,6 +20,7 @@ import {
 import { colors } from '../../assets';
 import { IBaseScreen } from '../../definitions/screens';
 
+// TODO: Formik
 const CreateTeam = ({ navigation }: IBaseScreen<any, any>) => {
   const [teamName, setTeamName] = useState('');
   const [regions, setRegions] = useState([]);
@@ -47,13 +48,30 @@ const CreateTeam = ({ navigation }: IBaseScreen<any, any>) => {
   }, [selectedRegion]);
 
   const onPressCreateTeam = () => {
-    database()
-      .ref('/users/122')
-      .set({
-        name: 'Ada Lovelace',
-        age: 31,
-      })
-      .then(() => console.log('Data set.'));
+    if (teamName && selectedPokemon.length && selectedRegion.name) {
+      database()
+        .ref(`/teams/${teamName}`)
+        .set({
+          name: selectedRegion.name,
+          teamName,
+          teamPokemon: selectedPokemon,
+        })
+        .then(() => navigation.goBack())
+        .catch(() => {
+          // Do nothing
+        });
+    } else {
+      Alert.alert(
+        'Something went wrong!',
+        'An error has ocurred while creating the team. Check every field and try again',
+        [
+          {
+            text: 'OK',
+            style: 'destructive',
+          },
+        ],
+      );
+    }
   };
 
   const onPressSelectRegion = () => {
@@ -103,24 +121,26 @@ const CreateTeam = ({ navigation }: IBaseScreen<any, any>) => {
 
   const onPressPokemon = (item: any) => {
     const isItemSelected = selectedPokemon.filter(
-      (pokemon: any) => pokemon === item.name,
+      (pokemon: any) => pokemon.name === item.name,
     );
 
     if (isItemSelected.length) {
       const filterPokemonFromSelected = selectedPokemon.filter(
-        (pokemon: any) => pokemon !== item.name,
+        (pokemon: any) => pokemon.name !== item.name,
       );
       setSelectedPokemon(filterPokemonFromSelected);
     } else {
-      setSelectedPokemon([...selectedPokemon, item.name]);
+      setSelectedPokemon([...selectedPokemon, item]);
     }
   };
 
   const renderItem = ({ item }: { item: any }) => {
-    const selected = selectedPokemon.find(pokemon => pokemon === item.name);
+    const selected = selectedPokemon.find(
+      (pokemon: any) => pokemon.name === item.name,
+    );
     const disabled =
       selectedPokemon.length === 6 &&
-      !selectedPokemon.find(pokemon => pokemon === item.name);
+      !selectedPokemon.find((pokemon: any) => pokemon.name === item.name);
     return (
       <Pressable
         disabled={disabled}
@@ -164,6 +184,14 @@ const CreateTeam = ({ navigation }: IBaseScreen<any, any>) => {
           keyExtractor={item => item.pokeImage}
           renderItem={renderItem}
         />
+        {selectedPokemon.length >= 3 ? (
+          <PokeButton
+            style={styles.createTeamButton}
+            onPress={onPressCreateTeam}
+            text="Create Team"
+            plainBackground
+          />
+        ) : null}
       </>
     );
   };
@@ -178,7 +206,7 @@ const CreateTeam = ({ navigation }: IBaseScreen<any, any>) => {
         placeholder="Team Name"
         onChangeText={value => setTeamName(value)}
       />
-      <TouchableOpacity onPress={() => onPressSelectRegion()}>
+      <Pressable onPress={() => onPressSelectRegion()}>
         <PokeInput
           iconName="angle-down"
           editable={false}
@@ -186,17 +214,10 @@ const CreateTeam = ({ navigation }: IBaseScreen<any, any>) => {
           placeholder="Select a Region"
           showSoftInputOnFocus={false}
         />
-      </TouchableOpacity>
+      </Pressable>
       {data.length > 0 ? <PokeSearch onChangeText={onSearchText} /> : null}
       {renderPokemon()}
-      {selectedPokemon.length >= 3 ? (
-        <PokeButton
-          style={styles.createTeamButton}
-          onPress={() => onPressCreateTeam()}
-          text="Create Team"
-          plainBackground
-        />
-      ) : null}
+
       {showRegionPicker ? regionPicker() : null}
     </PokeView>
   );
@@ -237,7 +258,6 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   createTeamButton: {
-    position: 'absolute',
     alignSelf: 'center',
     width: '90%',
     bottom: 34,

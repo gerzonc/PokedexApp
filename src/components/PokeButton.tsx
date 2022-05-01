@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, PressableProps } from 'react-native';
+import { Pressable, StyleSheet, PressableProps, View } from 'react-native';
 import React from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -23,7 +23,7 @@ const PokeButton = ({
     ? [colors.leftBackgroundContainer, colors.rightBackgroundContainer]
     : [colors.normalText, colors.normalText];
   return (
-    <Pressable disabled={disabled} onPress={onPress}>
+    <Pressable disabled={disabled} onPress={() => onPress()}>
       <LinearGradient
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 0 }}

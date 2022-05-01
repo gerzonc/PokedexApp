@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList } from 'react-native-gesture-handler';
 import { getPokemonByRegion } from '../../api';
-import { PokeSearch, PokeView } from '../../components';
+import { PokeCard, PokeSearch, PokeView } from '../../components';
 import ActivityIndicator from '../../components/ActivityIndicator';
 import NotFound from '../../components/NotFound';
 import PokeHeader from '../../components/PokeHeader';
 import { IBaseScreen } from '../../definitions/screens';
+import styles from './styles';
 
 const Region = ({ navigation, route }: IBaseScreen<any, any>) => {
   const { name, regionPokemon } = route.params;
@@ -40,28 +41,39 @@ const Region = ({ navigation, route }: IBaseScreen<any, any>) => {
   //     });
 
   const renderItem = ({ item }: { item: any }) => (
-    <PokeRegion
-      name={item.name}
-      locations={item.locations}
-      onPress={() => onPressItem(item)}
+    <PokeCard
+      pokeName={item.name}
+      pokeImage={item.pokeImage}
+      types={item.types}
     />
   );
+
+  const Pokemon = () => {
+    if (loading) {
+      return <ActivityIndicator />;
+    }
+
+    if ((searching && !search.length) || !data) {
+      return <NotFound />;
+    }
+
+    return (
+      <FlatList
+        data={searching ? search : data}
+        showsVerticalScrollIndicator={false}
+        numColumns={2}
+        contentContainerStyle={styles.container}
+        keyExtractor={(item, index) => item.pokeImage + index * 100}
+        renderItem={renderItem}
+      />
+    );
+  };
 
   return (
     <PokeView>
       <PokeHeader onPress={() => navigation.goBack()} />
       <PokeSearch onChangeText={onSearchText} />
-      {(searching && !search.length) || !data ? <NotFound /> : null}
-      {loading ? (
-        <ActivityIndicator />
-      ) : (
-        <FlatList
-          data={searching ? search : data}
-          showsHorizontalScrollIndicator
-          keyExtractor={(item, index) => (index + item).toString()}
-          renderItem={renderItem}
-        />
-      )}
+      <Pokemon />
     </PokeView>
   );
 };

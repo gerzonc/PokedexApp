@@ -1,16 +1,11 @@
-import {
-  View,
-  StyleSheet,
-  Dimensions,
-  GestureResponderEvent,
-} from 'react-native';
-// import { TouchableHighlight } from 'react-native-gesture-handler';
+import { View, StyleSheet, Dimensions } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import React from 'react';
-import { colors, images } from '../assets';
 import FastImage, { Source } from 'react-native-fast-image';
+
+import { colors, images } from '../assets';
 import PokeText from './PokeText';
 import Chip from './Chip';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const { width } = Dimensions.get('screen');
 

@@ -52,6 +52,29 @@ const Home = ({ navigation }: IBaseScreen<any, any>): React.ReactElement => {
     />
   );
 
+  const PokeRegions = () => {
+    if (loading) {
+      return <ActivityIndicator />;
+    }
+
+    if ((searching && !search.length) || !data) {
+      return <NotFound />;
+    }
+
+    return (
+      <FlatList
+        data={searching ? search : data}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        snapToInterval={FULL_SIZE}
+        decelerationRate="fast"
+        pagingEnabled
+        keyExtractor={(item, index) => (index + item).toString()}
+        renderItem={renderItem}
+      />
+    );
+  };
+
   return (
     <PokeView>
       <StatusBar hidden />
@@ -59,22 +82,7 @@ const Home = ({ navigation }: IBaseScreen<any, any>): React.ReactElement => {
         placeholder="Search for a region"
         onChangeText={onSearchText}
       />
-      {(searching && !search.length) || !data ? <NotFound /> : null}
-
-      {loading ? (
-        <ActivityIndicator />
-      ) : (
-        <FlatList
-          data={searching ? search : data}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          snapToInterval={FULL_SIZE}
-          decelerationRate="fast"
-          pagingEnabled
-          keyExtractor={(item, index) => (index + item).toString()}
-          renderItem={renderItem}
-        />
-      )}
+      <PokeRegions />
     </PokeView>
   );
 };

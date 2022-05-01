@@ -1,6 +1,7 @@
 import { View, StyleSheet } from 'react-native';
-import React from 'react';
 import LottieView from 'lottie-react-native';
+import React from 'react';
+
 import { images } from '../assets';
 import PokeText from './PokeText';
 

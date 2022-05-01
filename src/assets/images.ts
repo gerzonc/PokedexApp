@@ -14,6 +14,7 @@ const images: IImages = {
   kalos: require('./images/kalos_map.png'),
   sinnoh: require('./images/sinnoh_map.png'),
   unova: require('./images/unova_map.png'),
+  squirtleSilhouette: require('./images/squirtle_silhouette.png'),
   squirtle: require('./images/animated/squirtle.json'),
 };
 

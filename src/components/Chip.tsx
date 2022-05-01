@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import { View, StyleSheet } from 'react-native';
 import React from 'react';
 import colors from '../assets/colors';
@@ -9,7 +10,7 @@ interface IChip {
 }
 
 const Chip = ({ text, locations }: IChip) => {
-  if (!locations || !text) {
+  if (!text) {
     return null;
   }
 
@@ -18,12 +19,13 @@ const Chip = ({ text, locations }: IChip) => {
       style={[
         styles.container,
         {
-          backgroundColor: text ? colors[text] : colors.fallback,
+          width: locations !== undefined ? '45%' : text.length * 14,
+          backgroundColor: colors[text] ? colors[text] : colors.fallback,
         },
       ]}>
       <PokeText
-        style={styles.text}
-        text={locations ? `Locations: ${locations}` : text}
+        style={locations !== undefined ? styles.locations : styles.text}
+        text={locations !== undefined ? `Locations: ${locations}` : text}
       />
     </View>
   );
@@ -35,12 +37,16 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'center',
-    width: '35%',
     height: 25,
+    marginBottom: 2,
     borderRadius: 25,
-    margin: 8,
   },
   text: {
+    color: colors.backgroundColor,
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+  },
+  locations: {
     color: colors.rightBackgroundContainer,
   },
 });

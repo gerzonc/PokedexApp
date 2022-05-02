@@ -1,9 +1,10 @@
-import { Pressable, StyleSheet, PressableProps, View } from 'react-native';
+import { StyleSheet, PressableProps } from 'react-native';
 import React from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 
 import colors from '../assets/colors';
 import PokeText from './PokeText';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 interface IPokeButtonProps extends PressableProps {
   text?: string;
@@ -23,7 +24,7 @@ const PokeButton = ({
     ? [colors.leftBackgroundContainer, colors.rightBackgroundContainer]
     : [colors.normalText, colors.normalText];
   return (
-    <Pressable disabled={disabled} onPress={() => onPress()}>
+    <TouchableOpacity disabled={disabled} onPress={() => onPress()}>
       <LinearGradient
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 0 }}
@@ -38,7 +39,7 @@ const PokeButton = ({
           style={disabled ? styles.disabled : styles.buttonText}
         />
       </LinearGradient>
-    </Pressable>
+    </TouchableOpacity>
   );
 };
 

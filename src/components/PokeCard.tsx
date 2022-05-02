@@ -41,7 +41,9 @@ const PokeCard = ({ pokeName, pokeImage, types, selected }: IPokeCard) => {
       <View style={styles.cardInfo}>
         <View style={styles.chip}>
           {types.length > 0
-            ? types.map(({ type }) => <Chip key={type.url} text={type.name} />)
+            ? types.map(value => (
+                <Chip key={value + Math.random * 1000} text={value} />
+              ))
             : null}
         </View>
         <FastImage source={images.pokeball} style={styles.pokeball} />

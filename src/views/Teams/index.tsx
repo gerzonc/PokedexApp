@@ -1,11 +1,22 @@
 import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
-import { PokeButton, PokeSearch, PokeText, PokeView } from '../../components';
+import {
+  PokeButton,
+  PokeSearch,
+  PokeText,
+  PokeView,
+  PokeTeam,
+  ActivityIndicator,
+  NotFound,
+  PokeHeader,
+} from '../../components';
 import { images } from '../../assets';
 import database from '@react-native-firebase/database';
+import { FlatList } from 'react-native-gesture-handler';
+import { IBaseScreen } from '../../definitions/screens';
 
 const NoTeams = () => {
   const navigation = useNavigation();
@@ -27,25 +38,64 @@ const NoTeams = () => {
   );
 };
 
-const Teams = () => {
+const Teams = ({ navigation }: IBaseScreen<any, any>) => {
   const [teams, setTeams] = useState<any>([]);
+  const [loading, setLoading] = useState(false);
+  const [searching, setSearching] = useState(false);
+  const [search, setSearch] = useState([]);
+  const db = useRef<any>(null);
 
   useEffect(() => {
-    database()
-      .ref('/teams')
-      .on('value', snapshot => setTeams([snapshot.val()]));
-  });
+    db.current = database().ref('/teams');
+    const listener = db.current.on('value', (snapshot: any) => {
+      if (snapshot.val()) {
+        const data = Object.keys(snapshot.val()).map(key => {
+          return snapshot.val()[key];
+        });
+        setTeams(data);
+      }
+    });
+    return () => {
+      db.current.off('value', listener);
+    };
+  }, []);
 
-  if (!teams.length) {
+  const renderItem = ({ item }) => {
+    return <PokeTeam />;
+  };
+
+  const renderTeams = () => {
+    if (loading) {
+      return <ActivityIndicator />;
+    }
+    console.log(teams.length, teams);
+    if (!teams?.length) {
+      return (
+        <PokeView>
+          <NoTeams />
+        </PokeView>
+      );
+    }
+
+    if (searching && !search.length) {
+      return <NotFound />;
+    }
+
     return (
-      <PokeView>
-        <NoTeams />
-      </PokeView>
+      <FlatList
+        data={searching ? search : teams}
+        showsVerticalScrollIndicator={false}
+        // contentContainerStyle={styles.container}
+        renderItem={renderItem}
+      />
     );
-  }
+  };
+
   return (
     <PokeView>
+      <PokeHeader onPressRight={() => navigation.navigate('CreateTeam')} />
       <PokeSearch placeholder="Search for a team" />
+      {renderTeams()}
     </PokeView>
   );
 };

@@ -61,11 +61,11 @@ export const getPokemonByRegion = async (regionUrl: string) => {
       } = await fetcher(url).then(({ varieties }) =>
         fetcher(varieties[0].pokemon?.url),
       );
-
+      const pokemonTypes = types.map((value: any) => value.type.name);
       return {
         name,
         pokeImage: home.front_default,
-        types,
+        types: pokemonTypes,
         height,
       };
     }),

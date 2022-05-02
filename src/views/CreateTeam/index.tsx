@@ -32,6 +32,7 @@ const CreateTeam = ({ navigation }: IBaseScreen<any, any>) => {
     regionPokemon: '',
     name: '',
   });
+  const [dbLoading, setDbLoading] = useState(false);
   const [showRegionPicker, setShowRegionpicker] = useState(false);
   const [selectedPokemon, setSelectedPokemon] = useState([]);
 
@@ -48,17 +49,21 @@ const CreateTeam = ({ navigation }: IBaseScreen<any, any>) => {
   }, [selectedRegion]);
 
   const onPressCreateTeam = () => {
-    if (teamName && selectedPokemon.length && selectedRegion.name) {
+    if (teamName && selectedPokemon.length) {
+      setDbLoading(true);
       database()
-        .ref(`/teams/${teamName}`)
+        .ref(`/teams/${selectedRegion.name}`)
         .set({
           name: selectedRegion.name,
           teamName,
           teamPokemon: selectedPokemon,
         })
-        .then(() => navigation.goBack())
-        .catch(() => {
-          // Do nothing
+        .then(() => {
+          setDbLoading(false);
+          navigation.goBack();
+        })
+        .catch(e => {
+          console.error(e);
         });
     } else {
       Alert.alert(
@@ -198,7 +203,7 @@ const CreateTeam = ({ navigation }: IBaseScreen<any, any>) => {
 
   return (
     <PokeView>
-      <PokeHeader onPress={() => navigation.goBack()} />
+      <PokeHeader onPressLeft={() => navigation.goBack()} />
       <PokeText text="Create a Team" type="heading" style={styles.title} />
       <PokeInput
         iconName="user"
@@ -215,6 +220,19 @@ const CreateTeam = ({ navigation }: IBaseScreen<any, any>) => {
           showSoftInputOnFocus={false}
         />
       </Pressable>
+      {dbLoading ? (
+        <View
+          style={{
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
+            backgroundColor: colors.backgroundColor,
+            opacity: 0.45,
+            zIndex: 2,
+          }}>
+          <ActivityIndicator />
+        </View>
+      ) : null}
       {data.length > 0 ? <PokeSearch onChangeText={onSearchText} /> : null}
       {renderPokemon()}
 

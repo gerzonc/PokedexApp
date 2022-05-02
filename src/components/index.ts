@@ -6,6 +6,7 @@ export { default as PokeRegion } from './PokeRegion';
 export { default as PokeView } from './PokeView';
 export { default as PokeHeader } from './PokeHeader';
 export { default as PokeInput } from './PokeInput';
+export { default as PokeTeam } from './PokeTeam';
 export { default as ActivityIndicator } from './ActivityIndicator';
 export { default as NotFound } from './NotFound';
 export { default as Chip } from './Chip';

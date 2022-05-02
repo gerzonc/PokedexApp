@@ -69,7 +69,7 @@ const Region = React.memo(
 
     return (
       <PokeView>
-        <PokeHeader onPress={() => navigation.goBack()} />
+        <PokeHeader onPressLeft={() => navigation.goBack()} />
         <PokeSearch onChangeText={onSearchText} />
         <Pokemon />
       </PokeView>

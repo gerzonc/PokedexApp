@@ -2,11 +2,16 @@
 <p align="center"> A Pokédex app made with React Native! </p>
 
 ### Table of Contents
+  * [Pre-requisites](#prerequisites)
   * [Installation and usage](#installation)
   * [In case you might want to try with your developer account](#testing)
   * [Screenshots](#screenshot)
   * [Features](#features)
   * [Libraries](#libraries)
+
+## <a name="prerequisites"></a> Pre-requisites
+
+Ensure you have followed the installation process for [React Native](https://reactnative.dev/docs/environment-setup)
 
 ## <a name="installation"></a> Installation and usage
 

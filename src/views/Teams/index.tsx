@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import { StyleSheet, View } from 'react-native';
+import { Alert, StyleSheet, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import React, { useEffect, useRef, useState } from 'react';
 
@@ -15,7 +15,7 @@ import {
 } from '../../components';
 import { images } from '../../assets';
 import database from '@react-native-firebase/database';
-import { FlatList } from 'react-native-gesture-handler';
+import { FlatList, TouchableOpacity } from 'react-native-gesture-handler';
 import { IBaseScreen } from '../../definitions/screens';
 
 const NoTeams = () => {
@@ -60,15 +60,33 @@ const Teams = ({ navigation }: IBaseScreen<any, any>) => {
     };
   }, []);
 
+  const onLongPressItem = async item => {
+    Alert.alert('Delete team', 'Do you want to delete this team?', [
+      {
+        text: 'Cancel',
+        style: 'default',
+      },
+      {
+        text: 'OK',
+        onPress: () => database().ref(`/teams/${item.name}`).remove(),
+        style: 'destructive',
+      },
+    ]);
+  };
+
   const renderItem = ({ item }) => {
-    return <PokeTeam />;
+    return (
+      <TouchableOpacity onLongPress={() => onLongPressItem(item)}>
+        <PokeTeam />
+      </TouchableOpacity>
+    );
   };
 
   const renderTeams = () => {
     if (loading) {
       return <ActivityIndicator />;
     }
-    console.log(teams.length, teams);
+
     if (!teams?.length) {
       return (
         <PokeView>

@@ -1,6 +1,11 @@
 <img src="./src/assets/images/app_logo@3x.png" align="center" />
 <p align="center"> A Pokédex app made with React Native! </p>
 
+### Table of Contents
+  * [Installation and usage](#installation)
+  * [Screenshots](#screenshot)
+  * [Features](#features)
+  * [Libraries](#libraries)
 
 ## <a name="installation"></a> Installation and usage
 
@@ -42,7 +47,7 @@ $ npx react-native run-ios
    <img src="https://user-images.githubusercontent.com/36211892/166178146-0f7fdf36-8ecd-4bb9-bd52-da78d7826bc5.png" width="250"/>
 </p>
 
-## <a name="screenshot"></a> Libraries used
+## <a name="libraries"></a> Libraries used
 ```json
     "@react-native-firebase/app": "^14.9.1",
     "@react-native-firebase/auth": "^14.9.1",
@@ -65,3 +70,4 @@ $ npx react-native run-ios
     "react-native-screens": "^3.13.1",
     "react-native-vector-icons": "^9.1.0"
 ```
+

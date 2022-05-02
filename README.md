@@ -10,6 +10,8 @@
 
 ## <a name="installation"></a> Installation and usage
 
+First ensure you have an Android emulator with Google Play Services or an iOS simulator with at least iOS 12.
+
 For installing this project on your machine just clone the project and run in the console: 
 ```console
 $ yarn install

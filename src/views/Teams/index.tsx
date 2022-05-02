@@ -131,7 +131,9 @@ const Teams = ({ navigation }: IBaseScreen<any, any>) => {
 
   return (
     <PokeView>
-      <PokeHeader onPressRight={() => navigation.navigate('CreateTeam')} />
+      {teams.length > 0 ? (
+        <PokeHeader onPressRight={() => navigation.navigate('CreateTeam')} />
+      ) : null}
       <PokeSearch placeholder="Search for a team" onChangeText={onSearchText} />
       {dbLoading ? (
         <View style={styles.dbActivityIndicator}>

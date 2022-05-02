@@ -221,15 +221,7 @@ const CreateTeam = ({ navigation }: IBaseScreen<any, any>) => {
         />
       </Pressable>
       {dbLoading ? (
-        <View
-          style={{
-            position: 'absolute',
-            width: '100%',
-            height: '100%',
-            backgroundColor: colors.backgroundColor,
-            opacity: 0.45,
-            zIndex: 2,
-          }}>
+        <View style={styles.dbActivityIndicator}>
           <ActivityIndicator />
         </View>
       ) : null}
@@ -251,6 +243,14 @@ const styles = StyleSheet.create({
   title: {
     marginTop: 16,
     marginHorizontal: 16,
+  },
+  dbActivityIndicator: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    backgroundColor: colors.backgroundColor,
+    opacity: 0.45,
+    zIndex: 2,
   },
   pickerContainer: {
     position: 'absolute',

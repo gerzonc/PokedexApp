@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 
 import { colors, images } from '../assets';
 import Chip from './Chip';
-import FastImage, { Source } from 'react-native-fast-image';
+import FastImage, { ImageStyle, Source } from 'react-native-fast-image';
 
 interface IPokeCard {
   pokeName: string;
@@ -20,15 +20,16 @@ interface IPokeCard {
 interface IImage {
   actualSource: string;
   placeholder: Source;
+  style?: ImageStyle;
 }
 
-const PokeImage = ({ actualSource, placeholder }: IImage) => {
+export const PokeImage = ({ actualSource, placeholder, style }: IImage) => {
   const [source, setSource] = useState(placeholder);
   return (
     <FastImage
       source={source}
       onLoadEnd={() => setSource({ uri: actualSource })}
-      style={styles.pokeImage}
+      style={style ? style : styles.pokeImage}
     />
   );
 };
@@ -41,9 +42,7 @@ const PokeCard = ({ pokeName, pokeImage, types, selected }: IPokeCard) => {
       <View style={styles.cardInfo}>
         <View style={styles.chip}>
           {types.length > 0
-            ? types.map(value => (
-                <Chip key={value + Math.random * 1000} text={value} />
-              ))
+            ? types.map(value => <Chip key={value} text={value} />)
             : null}
         </View>
         <FastImage source={images.pokeball} style={styles.pokeball} />

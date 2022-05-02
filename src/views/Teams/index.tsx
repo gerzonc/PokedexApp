@@ -13,7 +13,7 @@ import {
   NotFound,
   PokeHeader,
 } from '../../components';
-import { images } from '../../assets';
+import { colors, images } from '../../assets';
 import database from '@react-native-firebase/database';
 import { FlatList, TouchableOpacity } from 'react-native-gesture-handler';
 import { IBaseScreen } from '../../definitions/screens';
@@ -40,18 +40,21 @@ const NoTeams = () => {
 
 const Teams = ({ navigation }: IBaseScreen<any, any>) => {
   const [teams, setTeams] = useState<any>([]);
+  const [search, setSearch] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searching, setSearching] = useState(false);
-  const [search, setSearch] = useState([]);
+  const [dbLoading, setDbLoading] = useState(false);
   const db = useRef<any>(null);
 
   useEffect(() => {
     db.current = database().ref('/teams');
     const listener = db.current.on('value', (snapshot: any) => {
       if (snapshot.val()) {
+        setLoading(true);
         const data = Object.keys(snapshot.val()).map(key => {
           return snapshot.val()[key];
         });
+        setLoading(false);
         setTeams(data);
       }
     });
@@ -59,6 +62,12 @@ const Teams = ({ navigation }: IBaseScreen<any, any>) => {
       db.current.off('value', listener);
     };
   }, []);
+
+  const removeTeam = item => {
+    setDbLoading(true);
+    database().ref(`/teams/${item.name}`).remove();
+    setDbLoading(false);
+  };
 
   const onLongPressItem = async item => {
     Alert.alert('Delete team', 'Do you want to delete this team?', [
@@ -68,16 +77,27 @@ const Teams = ({ navigation }: IBaseScreen<any, any>) => {
       },
       {
         text: 'OK',
-        onPress: () => database().ref(`/teams/${item.name}`).remove(),
+        onPress: () => removeTeam(item),
         style: 'destructive',
       },
     ]);
   };
 
-  const renderItem = ({ item }) => {
+  const onSearchText = async (text: string) => {
+    if (!text) {
+      setSearching(false);
+    }
+    setSearching(true);
+    const result = teams.filter((value: any) =>
+      value.name.includes(text.toLowerCase()),
+    );
+    setSearch(result);
+  };
+
+  const renderItem = ({ item, index }) => {
     return (
-      <TouchableOpacity onLongPress={() => onLongPressItem(item)}>
-        <PokeTeam />
+      <TouchableOpacity key={index} onLongPress={() => onLongPressItem(item)}>
+        <PokeTeam index={index} item={item} />
       </TouchableOpacity>
     );
   };
@@ -112,7 +132,12 @@ const Teams = ({ navigation }: IBaseScreen<any, any>) => {
   return (
     <PokeView>
       <PokeHeader onPressRight={() => navigation.navigate('CreateTeam')} />
-      <PokeSearch placeholder="Search for a team" />
+      <PokeSearch placeholder="Search for a team" onChangeText={onSearchText} />
+      {dbLoading ? (
+        <View style={styles.dbActivityIndicator}>
+          <ActivityIndicator />
+        </View>
+      ) : null}
       {renderTeams()}
     </PokeView>
   );
@@ -125,6 +150,14 @@ const styles = StyleSheet.create({
     flex: 1,
     marginHorizontal: 16,
     justifyContent: 'center',
+  },
+  dbActivityIndicator: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    backgroundColor: colors.backgroundColor,
+    opacity: 0.45,
+    zIndex: 2,
   },
   noTeamsBody: {
     alignItems: 'center',

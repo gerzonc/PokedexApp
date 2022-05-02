@@ -20,6 +20,8 @@ First ensure you have an Android emulator with Google Play Services or an iOS si
 For installing this project on your machine just clone the project and run in the console: 
 ```console
 $ yarn install
+// For iOS only
+$ cd ios && npx pod-install
 ```
 or
 ```console

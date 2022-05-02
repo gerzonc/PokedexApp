@@ -26,7 +26,7 @@ $ npx react-native run-ios
 
 1. Log-in with Google and Facebook
 2. List every Pokémon region
-3. List every Pokémon by region
+3. List every Pokémon *by* region
 4. Create Pokémon team
 5. Delete Pokémon team
 6. Data persistance with Firebase Realtime Databse

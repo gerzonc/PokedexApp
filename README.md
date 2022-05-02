@@ -37,7 +37,7 @@ $ npx react-native run-ios
 
 ## <a name="testing"></a> In case you might want to try with your developer account
 
-Follow [this](https://rnfirebase.io/auth/social-auth) documentation for Google and Facebook sign-in setup. In case you might run with any issue with any of these, ensure that you followed the Troubleshooting FAQ for each of these or the ones on their libs ([Here](https://github.com/react-native-google-signin/google-signin/blob/master/docs/ios-guide.md) for Google and [here](https://github.com/react-native-google-signin/google-signin/blob/master/docs/ios-guide.md) for Facebook)
+The project comes pre-configured with my settings for the Facebook and Google sign-in, but if you want to test it on your own environment, you would first need [this](https://console.firebase.google.com/) to configure your Firebase project and then [this](https://rnfirebase.io/auth/social-auth) one for Google and Facebook sign-in setup; also, you should do the same for configuring your Firebase console for stuff like [Realtime Database](https://rnfirebase.io/database/usage). In case you might run with any issue with any of these, ensure that you followed the Troubleshooting FAQ for each of these or the ones on their libs ([Here](https://github.com/react-native-google-signin/google-signin/blob/master/docs/ios-guide.md) for Google and [here](https://github.com/react-native-google-signin/google-signin/blob/master/docs/ios-guide.md) for Facebook)
 
 ## <a name="features"></a> Features
 

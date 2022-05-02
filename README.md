@@ -3,6 +3,7 @@
 
 ### Table of Contents
   * [Installation and usage](#installation)
+  * [In case you might want to try with your developer account](#testing)
   * [Screenshots](#screenshot)
   * [Features](#features)
   * [Libraries](#libraries)
@@ -26,6 +27,10 @@ or
 ```console
 $ npx react-native run-ios
 ```
+
+## <a name="testing"></a> In case you might want to try with your developer account
+
+Follow [this](https://rnfirebase.io/auth/social-auth) documentation for Google and Facebook sign-in setup. In case you might run with any issue with any of these, ensure that you followed the Troubleshooting FAQ for each of these or the ones on their libs ([Here](https://github.com/react-native-google-signin/google-signin/blob/master/docs/ios-guide.md) for Google and [here](https://github.com/react-native-google-signin/google-signin/blob/master/docs/ios-guide.md) for Facebook)
 
 ## <a name="features"></a> Features
 
